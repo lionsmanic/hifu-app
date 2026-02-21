@@ -316,26 +316,22 @@ input, select { font-family: inherit; }
   border-bottom: 1px solid var(--border-l);
 }
 .stepper-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
+  display: flex; flex-direction: column; gap: 8px;
 }
-/* 手機：單欄橫排，label 在左，+/- 在右 */
-@media (max-width: 699px) {
-  .stepper-grid { grid-template-columns: 1fr; gap: 8px; }
-  .stepper-item {
-    display: flex; align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px; text-align: left;
-  }
-  .stepper-label {
-    min-height: unset; margin-bottom: 0;
-    text-align: left; font-size: 13px;
-    flex: 1; justify-content: flex-start;
-  }
-  .stepper-score { margin-bottom: 0; margin-left: 8px; flex-shrink: 0; }
-  .stepper-controls { flex-shrink: 0; gap: 10px; margin-left: 12px; }
-  .stepper-btn { width: 44px; height: 44px; font-size: 22px; }
-  .stepper-val { font-size: 22px; min-width: 34px; }
+.stepper-item {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px; text-align: left;
 }
+.stepper-label {
+  min-height: unset; margin-bottom: 0;
+  text-align: left; font-size: 14px;
+  flex: 1; justify-content: flex-start;
+}
+.stepper-score { margin-bottom: 0; margin-left: 10px; flex-shrink: 0; }
+.stepper-controls { flex-shrink: 0; gap: 10px; margin-left: 16px; }
+.stepper-btn { width: 46px; height: 46px; font-size: 24px; }
+.stepper-val { font-size: 24px; min-width: 36px; text-align: center; }
 
 .stepper-item {
   background: var(--surface-2);
@@ -633,11 +629,6 @@ input[type="range"]:active::-webkit-slider-thumb {
 .chart-row {
   display: flex; flex-direction: column; gap: 16px;
   margin-bottom: 20px;
-}
-@media (min-width: 700px) {
-  .chart-row { flex-direction: row; align-items: flex-start; }
-  .chart-row .chart-box { flex: 0 0 180px; }
-  .chart-row .chart-form { flex: 1; min-width: 0; }
 }
 .chart-box {
   background: var(--surface-2);
