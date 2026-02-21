@@ -958,14 +958,14 @@ function s3() {
         <div class="udi-desc">${it.desc}</div>
         <div class="pill-group">${pills(`su${i}`,S[`udi_${i}`])}</div>
       </div>`).join('')}
-    ${udiTotal>0?`<div class="score-banner" style="margin-top:16px">
+    <div class="score-banner" id="udiScoreBanner" style="margin-top:16px;${udiTotal>0?'':'display:none'}">
       <div><div class="score-banner-label">UDI-6 困擾總分</div>
         <div style="display:flex;align-items:baseline;gap:4px">
-          <span class="score-banner-val">${udiTotal}</span>
+          <span class="score-banner-val" id="udiScoreVal">${udiTotal}</span>
           <span class="score-banner-unit">分</span>
         </div></div>
       <div style="color:rgba(255,255,255,.6);font-size:12px;text-align:right">滿分 18 分</div>
-    </div>`:''}`;
+    </div>`;
 
   return `
   <div class="sec-title">
@@ -1010,7 +1010,24 @@ function s3() {
 }
 // UDI setters
 for(let i=0;i<6;i++){
-  window[`su${i}`]=function(v){ S[`udi_${i}`]=v; render(); };
+  window[`su${i}`]=function(v){
+    S[`udi_${i}`]=v;
+    // 只更新這題的 pills，不重新 render 整頁（避免滾回頂端）
+    const group = document.querySelectorAll('.pill-group')[i];
+    if(group){
+      group.querySelectorAll('.pill').forEach((p,j)=>{
+        p.classList.toggle('selected', j===v);
+      });
+    }
+    // 更新 UDI 總分顯示
+    const total = [0,1,2,3,4,5].reduce((a,k)=>a+S[`udi_${k}`],0);
+    const banner = document.getElementById('udiScoreBanner');
+    if(banner){
+      banner.style.display = total>0 ? 'flex' : 'none';
+      const valEl = document.getElementById('udiScoreVal');
+      if(valEl) valEl.textContent = total;
+    }
+  };
 }
 function setPain(v) {
   S.pain_val = +v;
@@ -1098,7 +1115,7 @@ function s4() {
     </button>
   </div>
   <div style="text-align:center;margin-top:14px;font-size:12px;color:var(--text-3)">
-    📧 送出後報告與 Excel 將自動寄送至醫護信箱
+    📧 送出後報告將自動以 Email 傳送
   </div>
   <div class="clear-btn-wrap">
     <button class="btn-clear" onclick="confirmClear()">🔄 清空資料 / 換下一位患者</button>
@@ -1147,7 +1164,7 @@ function showSuccess() {
       <div class="success-title">問卷已成功送出！</div>
       <div class="success-sub">
         感謝配合填寫。<br>
-        詳細報告已自動發送至醫護人員信箱。
+        報告已自動以 Email 傳送。
       </div>
       <button class="btn-reset" onclick="resetApp()">🔄 填寫下一位患者</button>
     </div>`;
