@@ -318,15 +318,23 @@ input, select { font-family: inherit; }
 .stepper-grid {
   display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
 }
-/* 手機：衛生棉/棉條/血塊 每排改為直向排列，避免超出螢幕 */
-@media (max-width: 500px) {
-  .stepper-grid { grid-template-columns: 1fr; gap: 10px; }
-  .stepper-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
-  .stepper-label { min-height: unset; margin-bottom: 0; text-align: left; font-size: 13px; flex: 1; }
+/* 手機：單欄橫排，label 在左，+/- 在右 */
+@media (max-width: 699px) {
+  .stepper-grid { grid-template-columns: 1fr; gap: 8px; }
+  .stepper-item {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px; text-align: left;
+  }
+  .stepper-label {
+    min-height: unset; margin-bottom: 0;
+    text-align: left; font-size: 13px;
+    flex: 1; justify-content: flex-start;
+  }
   .stepper-score { margin-bottom: 0; margin-left: 8px; flex-shrink: 0; }
-  .stepper-controls { flex-shrink: 0; gap: 10px; }
-  .stepper-btn { width: 40px; height: 40px; font-size: 20px; }
-  .stepper-val { font-size: 22px; min-width: 32px; }
+  .stepper-controls { flex-shrink: 0; gap: 10px; margin-left: 12px; }
+  .stepper-btn { width: 44px; height: 44px; font-size: 22px; }
+  .stepper-val { font-size: 22px; min-width: 34px; }
 }
 
 .stepper-item {
@@ -626,9 +634,9 @@ input[type="range"]:active::-webkit-slider-thumb {
   display: flex; flex-direction: column; gap: 16px;
   margin-bottom: 20px;
 }
-@media (min-width: 540px) {
+@media (min-width: 700px) {
   .chart-row { flex-direction: row; align-items: flex-start; }
-  .chart-row .chart-box { flex: 0 0 200px; }
+  .chart-row .chart-box { flex: 0 0 180px; }
   .chart-row .chart-form { flex: 1; min-width: 0; }
 }
 .chart-box {
